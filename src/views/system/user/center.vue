@@ -122,9 +122,7 @@ export default {
   data() {
     // 自定义验证
     const validPhone = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入电话号码'))
-      } else if (!isvalidPhone(value)) {
+      if (value && !isvalidPhone(value)) {
         callback(new Error('请输入正确的11位手机号码'))
       } else {
         callback()
@@ -145,7 +143,7 @@ export default {
           { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
         ],
         phone: [
-          { required: true, trigger: 'blur', validator: validPhone }
+          { required: false, trigger: 'blur', validator: validPhone }
         ]
       }
     }

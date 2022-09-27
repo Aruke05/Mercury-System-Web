@@ -74,7 +74,7 @@
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="form.email" />
             </el-form-item>
-            <el-form-item label="部门" prop="dept.id" :required="true">
+            <el-form-item label="部门" prop="dept.id">
               <treeselect
                 v-model="form.dept.id"
                 :options="depts"
@@ -83,7 +83,7 @@
                 placeholder="选择部门"
               />
             </el-form-item>
-            <el-form-item label="岗位" prop="jobs" :required="true">
+            <el-form-item label="岗位" prop="jobs">
               <el-select
                 v-model="jobDatas"
                 style="width: 178px"
@@ -115,7 +115,7 @@
                 >{{ item.label }}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item style="margin-bottom: 0;" label="角色" prop="roles" :required="true">
+            <el-form-item style="margin-bottom: 0;" label="角色" prop="roles">
               <el-select
                 v-model="roleDatas"
                 style="width: 437px"
