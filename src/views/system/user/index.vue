@@ -60,7 +60,7 @@
           <crudOperation show="" :permission="permission" />
         </div>
         <!--表单渲染-->
-        <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="570px">
+        <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="620px">
           <el-form ref="form" :inline="true" :model="form" :rules="rules" size="small" label-width="66px">
             <el-form-item label="用户名" prop="username">
               <el-input v-model="form.username" @keydown.native="keydown($event)" />
@@ -74,7 +74,7 @@
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="form.email" />
             </el-form-item>
-            <el-form-item label="部门" prop="dept.id">
+            <el-form-item label="部门" prop="dept.id" :required="true">
               <treeselect
                 v-model="form.dept.id"
                 :options="depts"
@@ -83,7 +83,7 @@
                 placeholder="选择部门"
               />
             </el-form-item>
-            <el-form-item label="岗位" prop="jobs">
+            <el-form-item label="岗位" prop="jobs" :required="true">
               <el-select
                 v-model="jobDatas"
                 style="width: 178px"
@@ -115,7 +115,7 @@
                 >{{ item.label }}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item style="margin-bottom: 0;" label="角色" prop="roles">
+            <el-form-item style="margin-bottom: 0;" label="角色" prop="roles" :required="true">
               <el-select
                 v-model="roleDatas"
                 style="width: 437px"
@@ -132,6 +132,12 @@
                   :value="item.id"
                 />
               </el-select>
+            </el-form-item>
+            <el-form-item style="margin-top: 15px" label="密码" prop="firstPassword">
+              <el-input v-model="form.firstPassword" style="width: 437px" type="password" show-password />
+            </el-form-item>
+            <el-form-item label="再次输入密码" label-width="100" prop="password">
+              <el-input v-model="form.password" style="width: 407px" type="password" show-password />
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -218,10 +224,15 @@ export default {
   data() {
     // 自定义验证
     const validPhone = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入电话号码'))
-      } else if (!isvalidPhone(value)) {
+      if (value && !isvalidPhone(value)) {
         callback(new Error('请输入正确的11位手机号码'))
+      } else {
+        callback()
+      }
+    }
+    const validPassword = (rule, value, callback) => {
+      if (this.form.firstPassword && value !== this.form.firstPassword) {
+        callback(new Error('两次密码必须相同'))
       } else {
         callback()
       }
@@ -250,11 +261,14 @@ export default {
           { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
         ],
         email: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { required: false, message: '请输入邮箱地址', trigger: 'blur' },
           { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
         ],
         phone: [
-          { required: true, trigger: 'blur', validator: validPhone }
+          { required: false, trigger: 'blur', validator: validPhone }
+        ],
+        password: [
+          { required: false, trigger: 'blur', validator: validPassword }
         ]
       }
     }

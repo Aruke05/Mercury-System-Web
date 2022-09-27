@@ -2,7 +2,7 @@ module.exports = {
   /**
    * @description 网站标题
    */
-  title: 'ELADMIN',
+  title: 'Mercury-System',
   /**
    * @description 是否显示 tagsView
    */
@@ -14,11 +14,11 @@ module.exports = {
   /**
    * @description 记住密码状态下的token在Cookie中存储的天数，默认1天
    */
-  tokenCookieExpires: 1,
+  tokenCookieExpires: 30,
   /**
    * @description 记住密码状态下的密码在Cookie中存储的天数，默认1天s
    */
-  passCookieExpires: 1,
+  passCookieExpires: 30,
   /**
    * @description token key
    */
@@ -38,7 +38,7 @@ module.exports = {
   /**
    * 底部文字，支持html语法
    */
-  footerTxt: '© 2018-2022 Zheng Jie <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a>',
+  footerTxt: '@Mercury 9-11',
   /**
    * 备案号
    */
