@@ -22,7 +22,7 @@ module.exports = {
   /**
    * @description token key
    */
-  TokenKey: 'ELADMIN-TOEKN',
+  TokenKey: 'MERCURY-TOEKN',
   /**
    * @description 请求超时时间，毫秒（默认2分钟）
    */

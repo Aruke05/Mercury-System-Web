@@ -6,6 +6,9 @@ import 'normalize.css/normalize.css'
 
 import Element from 'element-ui'
 
+import axios from 'axios'
+import qs from 'qs'
+
 // 数据字典
 import dict from './components/Dict'
 
@@ -30,6 +33,10 @@ Vue.use(dict)
 Vue.use(Element, {
   size: Cookies.get('size') || 'small' // set element-ui default size
 })
+
+axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+Vue.prototype.$axios = axios
+Vue.prototype.qs = qs
 
 Vue.config.productionTip = false
 
