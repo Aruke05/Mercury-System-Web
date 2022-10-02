@@ -1,5 +1,21 @@
 <template>
   <div class="app-container">
+    <!--工具栏-->
+    <div class="head-container">
+      <div>
+        <!-- 搜索 -->
+        <el-input
+          v-model="queryParam.userName"
+          clearable
+          size="small"
+          placeholder="输入用户名或者昵称搜索"
+          style="width: 200px;"
+          class="filter-item"
+        />
+        <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="query(1)">搜索</el-button>
+        <el-button class="filter-item" size="mini" type="warning" icon="el-icon-refresh-left" @click="resetQuery()">重置</el-button>
+      </div>
+    </div>
     <!--表格渲染-->
     <el-table ref="table" v-loading="loading" :data="tableData" style="width: 100%;">
       <el-table-column type="selection" width="55" />
@@ -7,12 +23,12 @@
       <el-table-column :show-overflow-tooltip="true" width="100" prop="nickName" label="昵称" />
       <el-table-column prop="roleName" width="100" label="角色" />
       <el-table-column prop="deptName" width="100" label="部门" />
-      <el-table-column :show-overflow-tooltip="true" width="300" prop="spaceName" label="加密昵称" />
+      <el-table-column :show-overflow-tooltip="true" width="500" prop="spaceName" label="加密昵称" />
       <el-table-column prop="gender" width="50" label="性别" />
       <el-table-column :show-overflow-tooltip="true" prop="createTime" label="创建日期" />
       <el-table-column
         label="操作"
-        width="115"
+        width="150"
         align="center"
         fixed="right"
       >
@@ -83,32 +99,23 @@ export default {
       },
       url: {
         queryUser: '/base/users/queryUserPage',
-        getSpaceName: '/space/encrypt',
+        getSpaceName: '/space/getSpaceName',
         saveSpaceName: '/space/saveSpaceName'
       },
       drawerUserName: '',
-      drawerSpaceName: ''
+      drawerSpaceName: '',
+      queryParam: {}
     }
   },
   mounted() {
-    this.getTableData()
+    this.query()
   },
   methods: {
     selectionChangeHandler(val) {
       this.selectList = val
     },
     handleCurrentChange(val) {
-      this.getTableData(val)
-    },
-    getTableData(page) {
-      this.loading = true
-      this.page.page = page || this.page.page
-      postAction(this.url.queryUser, { page: this.page }).then(res => {
-        this.page.page = res.result.page
-        this.page.total = res.result.total
-        this.tableData = res.result.records
-        this.loading = false
-      })
+      this.query(val)
     },
     handleClose() {
       /* this.$confirm('确认关闭？')
@@ -137,8 +144,23 @@ export default {
       })
     },
     handleSpaceName() {
-      postAction(this.url.getSpaceName + '/' + this.drawerUserName + '/' + 'Enu', {}).then(res => {
+      postAction(this.url.getSpaceName, { userName: this.drawerUserName }).then(res => {
         this.drawerSpaceName = res.message
+      })
+    },
+    resetQuery() {
+      this.queryParam = {}
+      this.query(1)
+    },
+    query(page) {
+      this.page.current = page || this.page.current
+      this.queryParam.nickName = this.queryParam.userName
+      const parameter = Object.assign({ page: this.page }, this.queryParam)
+      this.loading = true
+      postAction(this.url.queryUser, parameter).then(res => {
+        this.page.total = res.result.total
+        this.tableData = res.result.records
+        this.loading = false
       })
     }
   }
