@@ -1,11 +1,12 @@
 {
-  "name": "eladmin-web",
+  "name": "Mercury-System-Web",
   "version": "2.6.0",
-  "description": "ELADMIN 前端源码",
-  "author": "Zheng Jie",
+  "description": "MercurySystem-Web",
+  "author": "Mercury",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "vue-cli-service serve",
+    "product": "vue-cli-service serve --mode production",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "preview": "node build/index.js --preview",
