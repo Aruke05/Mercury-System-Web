@@ -26,8 +26,12 @@
         记住我
       </el-checkbox>
       <el-form-item style="width:100%;">
-        <el-button :loading="loading" size="medium" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+        <el-button :loading="loading" size="medium" type="primary" style="width:47%;" @click.native.prevent="handleLogin">
           <span v-if="!loading">登 录</span>
+          <span v-else>登 录 中...</span>
+        </el-button>
+        <el-button :loading="guestLoading" size="medium" type="warning" style="width:47%;" @click.native.prevent="handleLoginGuest">
+          <span v-if="!guestLoading">游 客 登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
       </el-form-item>
@@ -68,6 +72,7 @@ export default {
         code: [{ required: true, trigger: 'change', message: '验证码不能为空' }]
       },
       loading: false,
+      guestLoading: false,
       redirect: undefined
     }
   },
@@ -149,6 +154,15 @@ export default {
           console.log('error submit!!')
           return false
         }
+      })
+    },
+    handleLoginGuest() {
+      this.$store.dispatch('LoginGuest').then(() => {
+        this.loading = false
+        this.$router.push({ path: this.redirect || '/' })
+      }).catch(() => {
+        this.loading = false
+        this.getCode()
       })
     },
     point() {

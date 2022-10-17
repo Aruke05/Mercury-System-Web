@@ -13,6 +13,15 @@ export function login(username, password, code, uuid) {
   })
 }
 
+export function loginGuest() {
+  return request({
+    url: 'auth/loginGuest',
+    method: 'post',
+    data: {
+    }
+  })
+}
+
 export function getInfo() {
   return request({
     url: 'auth/info',

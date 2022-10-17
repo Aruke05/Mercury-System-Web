@@ -14,7 +14,7 @@
         <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="query()">获取</el-button>
       </el-row>
       <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px; min-height: 100px;">
-        <el-col v-for="item in this.dataList" :span="6">
+        <el-col v-for="item in this.dataList" :span="6" style="margin-bottom: 32px">
           <PersonCard :person="item" /></el-col>
       </el-row>
     </div>

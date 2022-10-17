@@ -3,7 +3,6 @@ import Request from '@/utils/request'
 
 export function postAction(url, parameter) {
   // 将签名和时间戳，添加在请求接口 Header
-  url = (process.env.VUE_APP_BASE_API ? process.env.VUE_APP_BASE_API : '/') + url
   return Request({
     url: url,
     method: 'post',
@@ -13,7 +12,6 @@ export function postAction(url, parameter) {
 
 // post method= {post | put}
 export function httpAction(url, parameter, method) {
-  url = (process.env.VUE_APP_BASE_API ? process.env.VUE_APP_BASE_API : '/') + url
   return Request({
     url: url,
     method: method,
@@ -23,7 +21,6 @@ export function httpAction(url, parameter, method) {
 
 // put
 export function putAction(url, parameter) {
-  url = (process.env.VUE_APP_BASE_API ? process.env.VUE_APP_BASE_API : '/') + url
   return Request({
     url: url,
     method: 'put',
@@ -33,7 +30,6 @@ export function putAction(url, parameter) {
 
 // get
 export function getAction(url, parameter) {
-  url = (process.env.VUE_APP_BASE_API ? process.env.VUE_APP_BASE_API : '/') + url
   return Request({
     url: url,
     method: 'get',
@@ -43,7 +39,6 @@ export function getAction(url, parameter) {
 
 // deleteAction
 export function deleteAction(url, parameter) {
-  url = (process.env.VUE_APP_BASE_API ? process.env.VUE_APP_BASE_API : '/') + url
   return Request({
     url: url,
     method: 'delete',

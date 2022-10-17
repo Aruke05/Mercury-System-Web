@@ -24,8 +24,8 @@
               <li><svg-icon icon-class="dept" /> 所属部门 <div class="user-right"> {{ user.dept.name }}</div></li>
               <li><svg-icon icon-class="phone" /> 手机号码 <div class="user-right">{{ user.phone }}</div></li>
               <li><svg-icon icon-class="email" /> 用户邮箱 <div class="user-right">{{ user.email }}</div></li>
-              <li>
-                <svg-icon icon-class="anq" /> 安全设置
+              <li  v-if="!user.username == 'guest'">
+                <svg-icon icon-class="anq"/> 安全设置
                 <div class="user-right">
                   <a @click="$refs.pass.dialog = true">修改密码</a>
                   <a @click="$refs.email.dialog = true">修改邮箱</a>
@@ -42,26 +42,26 @@
             <el-tab-pane label="用户资料" name="first">
               <el-form ref="form" :model="form" :rules="rules" style="margin-top: 10px;" size="small" label-width="65px">
                 <el-form-item label="昵称" prop="nickName">
-                  <el-input v-model="form.nickName" style="width: 35%" />
+                  <el-input v-model="form.nickName" style="width: 35%" :disabled="user.username == 'guest'"/>
                   <span style="color: #C0C0C0;margin-left: 10px;">用户昵称不作为登录使用</span>
                 </el-form-item>
                 <el-form-item label="手机号" prop="phone">
-                  <el-input v-model="form.phone" style="width: 35%;" />
+                  <el-input v-model="form.phone" style="width: 35%;" :disabled="user.username == 'guest'"/>
                   <span style="color: #C0C0C0;margin-left: 10px;">手机号码不能重复</span>
                 </el-form-item>
                 <el-form-item label="性别">
-                  <el-radio-group v-model="form.gender" style="width: 178px">
+                  <el-radio-group v-model="form.gender" style="width: 178px" :disabled="user.username == 'guest'">
                     <el-radio label="男">男</el-radio>
                     <el-radio label="女">女</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="">
-                  <el-button :loading="saveLoading" size="mini" type="primary" @click="doSubmit">保存配置</el-button>
+                  <el-button :loading="saveLoading" size="mini" type="primary" @click="doSubmit" v-if="!user.username == 'guest'">保存配置</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
             <!--    操作日志    -->
-            <el-tab-pane label="操作日志" name="second">
+            <el-tab-pane label="操作日志" name="second" v-if="!user.username == 'guest'">
               <el-table v-loading="loading" :data="data" style="width: 100%;">
                 <el-table-column prop="description" label="行为" />
                 <el-table-column prop="requestIp" label="IP" />
@@ -153,7 +153,7 @@ export default {
       'user',
       'updateAvatarApi',
       'baseApi'
-    ])
+    ]),
   },
   created() {
     this.form = { id: this.user.id, nickName: this.user.nickName, gender: this.user.gender, phone: this.user.phone }
