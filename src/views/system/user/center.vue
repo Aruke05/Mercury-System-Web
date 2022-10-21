@@ -161,6 +161,10 @@ export default {
   },
   methods: {
     toggleShow() {
+      if(this.user.username == 'guest'){
+        this.$message.error('游客不允许修改头像');
+        return
+      }
       this.show = !this.show
     },
     handleClick(tab, event) {

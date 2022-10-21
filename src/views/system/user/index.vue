@@ -147,7 +147,13 @@
         </el-dialog>
         <!--表格渲染-->
         <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
-          <el-table-column :selectable="checkboxT" type="selection" width="55" />
+          <el-table-column :selectable="checkboxT" type="selection" width="50" />
+          <el-table-column :show-overflow-tooltip="true" prop="id" width="50" label="编号" />
+          <el-table-column :show-overflow-tooltip="true" prop="id" width="70" label="画像">
+            <template slot-scope="scope">
+              <el-avatar shape="square" size="small" :src="scope.row.avatarName ? baseApi + '/avatar/' + scope.row.avatarName : Avatar"></el-avatar>
+            </template>
+          </el-table-column>
           <el-table-column :show-overflow-tooltip="true" prop="username" label="用户名" />
           <el-table-column :show-overflow-tooltip="true" prop="nickName" label="昵称" />
           <el-table-column prop="gender" label="性别" />
@@ -209,6 +215,7 @@ import Treeselect from '@riophae/vue-treeselect'
 import { mapGetters } from 'vuex'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
+import Avatar from '@/assets/images/avatar.png'
 let userRoles = []
 let userJobs = []
 const defaultForm = { id: null, username: null, nickName: null, gender: '男', email: null, enabled: 'false', roles: [], jobs: [], dept: { id: null }, phone: null }
@@ -238,6 +245,7 @@ export default {
       }
     }
     return {
+      Avatar: Avatar,
       height: document.documentElement.clientHeight - 180 + 'px;',
       deptName: '', depts: [], deptDatas: [], jobs: [], level: 3, roles: [],
       jobDatas: [], roleDatas: [], // 多选时使用
@@ -275,7 +283,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'user'
+      'user',
+      'baseApi'
     ])
   },
   created() {
