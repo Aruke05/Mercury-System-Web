@@ -13,11 +13,11 @@
              <el-row style="text-align: center">
                <el-avatar shape="square" size="small" :src="item.avatarName ? baseApi + '/avatar/' + item.avatarName : Avatar"></el-avatar>
               </el-row>
-              <el-row style="text-align: center; top: 8px">
+              <el-row style="text-align: center; top: 8px; width: 111%">
                 {{item.nickName}}
               </el-row>
            </el-col>
-           <el-col :span="23" style="color: #D6D5A8; margin-top: 15px; max-width: 100%">
+           <el-col :span="23" style="color: #D6D5A8; margin-top: 15px; padding-left: 20px">
              {{item.desc}}
            </el-col>
          </el-row>
@@ -27,7 +27,7 @@
            时间:{{item.insertTime}}
          </div>
          <!-- :underline='false' 去除下划线 -->
-         <el-link type="danger" style="margin-right: 20px" :underline='false' @click="del(index,item)">删除</el-link>
+         <el-link type="danger" style="margin-right: 20px" :underline='false' @click="del(index,item)" v-if="item.userId == user.id || user.isAdmin">删除</el-link>
        </div>
      </div>
    </div>
@@ -117,7 +117,7 @@ export default {
       })
     },
     del(index,item){ //删除事件
-      this.$confirm(`确定要删除${item.nikeName}的留言吗?`, '删除提示', {
+      this.$confirm(`确定要删除${item.nickName}的留言吗?`, '删除提示', {
         confirmButtonText: '删除',
         cancelButtonText: '取消',
         type: 'warning'
