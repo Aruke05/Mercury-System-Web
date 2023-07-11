@@ -58,7 +58,7 @@
       show-close="true"
       :before-close="handleClose"
     >
-      <div class="el-drawer__body" style="height: 120px; width: 100%;margin-top: 50px; margin-left: 10px">
+      <div class="el-drawer__body" style="width: 100%; margin-left: 10px">
         <el-form>
           <el-form-item label="用户名" label-width="80px">
             <el-input v-model="drawerUserName" disabled="true" style="width: 80%" />
